@@ -8,6 +8,8 @@ const Auth = (req: Request, res: Response, next: NextFunction) => {
     if (token) {
       const decoded = JWT.verify(token, Constants.SECRET_KEY)
       req.credentials = decoded
+    } else {
+      res.status(401).json({ statusCode: 401, error: 'Unauthorized' })
     }
   } catch (error) {
     console.log(error)

@@ -6,8 +6,9 @@ const Validate = (schema: ObjectSchema, property: 'body' | 'query') => {
     try {
       const { error }: ValidationResult = schema.validate(req[property])
       if (error) {
-        console.log('error', error)
-        res.status(400).json({ statusCode: 400, error })
+        const { details } = error
+        const message = details.map((i) => i.message).join(',')
+        res.status(400).json({ statusCode: 400, error: message })
       } else next()
     } catch (error) {
       console.log(error)

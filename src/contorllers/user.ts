@@ -160,7 +160,7 @@ const updateProfile = async (req: Request, res: Response) => {
         firstName: updateUser.firstName,
         lastName: updateUser.lastName,
         status: updateUser.status,
-        photo: updateUser.photo
+        photo: updateUser.photo ? updateUser.photo.split('/').pop() : ''
       }
       const token = JWT.sign(payload, Constants.SECRET_KEY, {
         expiresIn: Constants.TOKEN_EXPIRE

@@ -70,14 +70,14 @@ const signIn = async (req: Request, res: Response) => {
     const { userName, password } = req.body
     const user = await DB.User.findOne({ userName })
     if (!user) {
-      return res.status(401).json({ statusCode: 401, error: 'Unauthorized', data: { message: 'user not exists' } })
+      return res.status(401).json({ statusCode: 401, error: 'Unauthorized',  message: 'user not exists' } )
     }
     const isMatch = bcrypt.compareSync(password, user.password)
     if (!isMatch) {
-      return res.status(401).json({ statusCode: 401, error: 'Unauthorized', data: { message: 'invalid password' } })
+      return res.status(401).json({ statusCode: 401, error: 'Unauthorized',  message: 'invalid password' } )
     }
     if (user.status === Interfaces.EStatusUser.BANNED) {
-      return res.status(401).json({ statusCode: 401, error: 'Unauthorized', data: { message: 'user is banned' } })
+      return res.status(401).json({ statusCode: 401, error: 'Unauthorized',  message: 'user is banned' } )
     }
     const payload = {
       userId: user._id,
@@ -195,7 +195,7 @@ const changePassword = async (req: Request, res: Response) => {
 
     const isMatch = bcrypt.compareSync(password, user.password)
     if (!isMatch) {
-      return res.status(401).json({ statusCode: 401, error: 'Unauthorized', data: { message: 'invalid password' } })
+      return res.status(401).json({ statusCode: 401, error: 'Unauthorized',  message: 'invalid password' } )
     }
 
     const updatePassword = bcrypt.hashSync(newPassword, 10)
